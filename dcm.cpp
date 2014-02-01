@@ -10,12 +10,8 @@ vec make_vec(double a, double b, double c);
 
 int main(int argc, char *argv[]) {
 
-	vec I, J, K; 
-	vec i, j, k;   
-	vec ig, jg, kg; // vectors in ground frame
-
-	vec capitals[3] = {I, J, K};
-	vec lowercase[3] = {i, j, k}; 
+	vec capitals[3];
+	vec lowercase[3];
 	vec ground[3];
 
 	// initialize the vectors with some simple values
