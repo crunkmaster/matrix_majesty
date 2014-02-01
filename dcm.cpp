@@ -7,6 +7,7 @@ typedef struct {
 void print_vec(vec x);
 double dot(vec a, vec b);
 vec make_vec(double a, double b, double c);
+void gen_dcm(vec *ground, vec *capitals, vec *lowercase);
 
 int main(int argc, char *argv[]) {
 
@@ -26,10 +27,7 @@ int main(int argc, char *argv[]) {
 	//	ground[0] = ig = {I.i, J.i, K.i}
 	//	ground[1] = jg = {I.j, J.j, K.j}
 	//	ground[2] = kg = {I.k, J.k, K.k}
-
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-			ground[i].comp[j] = dot(capitals[j], lowercase[i]);
+	gen_dcm(ground, capitals, lowercase);
 
 	for (int i = 0; i < 3; i++) {
 		printf("capitals[%d] ", i);
@@ -45,6 +43,14 @@ int main(int argc, char *argv[]) {
 	}
 
 	return 0;
+}
+
+// capitals should be an array of 3 vecs {I, J, K}
+// lowercase should be an array of 3 vecs {i, j, k}
+void gen_dcm(vec *ground, vec *capitals, vec *lowercase) {
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
+			ground[i].comp[j] = dot(capitals[j], lowercase[i]);
 }
 
 void print_vec(vec x) {
