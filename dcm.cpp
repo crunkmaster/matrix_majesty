@@ -1,7 +1,4 @@
-#include <iostream>
 #include <cstdio>
-
-using namespace std;
 
 typedef struct {
 	double comp[3];
@@ -9,15 +6,20 @@ typedef struct {
 
 void print_vec(vec x);
 double dot(vec a, vec b);
+vec make_vec(double a, double b, double c);
+
 int main(int argc, char *argv[]) {
 
-	vec I, J, K;
-	vec i, j, k;
-	vec ig, jg, kg;
+	vec I, J, K; 
+	vec i, j, k;   
+	vec ig, jg, kg; // vectors in ground frame
+
 	vec capitals[3] = {I, J, K};
 	vec lowercase[3] = {i, j, k}; 
-	vec ground[3] = {ig, jg, kg};
+	vec ground[3];
 
+	// initialize the vectors with some simple values
+	// for actual testing, make some vectors with make_vec
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
 			capitals[i].comp[j] = j + 1;
@@ -25,19 +27,25 @@ int main(int argc, char *argv[]) {
 		}
 	}
 
-	for (int i = 0; i < 3; i++) {
-		for (int j = 0; j < 3; j++) {
+	//	ground[0] = ig = {I.i, J.i, K.i}
+	//	ground[1] = jg = {I.j, J.j, K.j}
+	//	ground[2] = kg = {I.k, J.k, K.k}
+
+	for (int i = 0; i < 3; i++)
+		for (int j = 0; j < 3; j++)
 			ground[i].comp[j] = dot(capitals[j], lowercase[i]);
-		}
-	}
 
 	for (int i = 0; i < 3; i++) {
 		printf("capitals[%d] ", i);
 		print_vec(capitals[i]);
+
 		printf("lowercase[%d] ", i);
 		print_vec(lowercase[i]);
+
 		printf("ground[%d] ", i);
 		print_vec(ground[i]);
+
+		printf("\n");
 	}
 
 	return 0;
@@ -50,7 +58,18 @@ void print_vec(vec x) {
 	printf("\n");
 }
 
+// builds a vector from three values
+vec make_vec(double a, double b, double c) {
+	vec temp;
+	temp.comp[0] = a; temp.comp[1] = b;
+	temp.comp[2] = c;
+
+	return temp;
+}
+
+
 // this function assumes only 3d vectors
+// computes the dot product of two vectors
 double dot(vec a, vec b) {
 	double sum = 0;
 	for (int i = 0; i < 3; i++) {
